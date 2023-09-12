@@ -18,7 +18,8 @@
 			}
 
 			.element {
-				width: 120px;
+				width: 140px;
+				/* width: 200px; */
 				height: 160px;
 				box-shadow: 0px 0px 12px rgba(0,255,255,0.5);
 				border: 1px solid rgba(127,255,255,0.25);
@@ -38,6 +39,7 @@
 					top: 20px;
 					right: 20px;
 					font-size: 12px;
+					/* font-size: 60px; */
 					color: rgba(127,255,255,0.75);
 				}
 
@@ -46,7 +48,8 @@
 					top: 40px;
 					left: 0px;
 					right: 0px;
-					font-size: 60px;
+					font-size: 30px;
+					/* font-size: 12px; */
 					font-weight: bold;
 					color: rgba(255,255,255,0.75);
 					text-shadow: 0 0 10px rgba(0,255,255,0.95);
@@ -57,7 +60,9 @@
 					bottom: 15px;
 					left: 0px;
 					right: 0px;
-					font-size: 12px;
+					font-size: 30px;
+					font-weight: bold;
+					/* font-size: 60px; */
 					color: rgba(127,255,255,0.75);
 				}
 
@@ -89,6 +94,7 @@
 			<button id="sphere">SPHERE</button>
 			<button id="helix">HELIX</button>
 			<button id="grid">GRID</button>
+			<button id="cone">CONE</button>
 		</div>
 
 		<!-- Import maps polyfill -->
@@ -113,131 +119,374 @@
 			import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 
 			const table = [
-				'H', 'Hydrogen', '1.00794', 1, 1,
-				'He', 'Helium', '4.002602', 18, 1,
-				'Li', 'Lithium', '6.941', 1, 2,
-				'Be', 'Beryllium', '9.012182', 2, 2,
-				'B', 'Boron', '10.811', 13, 2,
-				'C', 'Carbon', '12.0107', 14, 2,
-				'N', 'Nitrogen', '14.0067', 15, 2,
-				'O', 'Oxygen', '15.9994', 16, 2,
-				'F', 'Fluorine', '18.9984032', 17, 2,
-				'Ne', 'Neon', '20.1797', 18, 2,
-				'Na', 'Sodium', '22.98976...', 1, 3,
-				'Mg', 'Magnesium', '24.305', 2, 3,
-				'Al', 'Aluminium', '26.9815386', 13, 3,
-				'Si', 'Silicon', '28.0855', 14, 3,
-				'P', 'Phosphorus', '30.973762', 15, 3,
-				'S', 'Sulfur', '32.065', 16, 3,
-				'Cl', 'Chlorine', '35.453', 17, 3,
-				'Ar', 'Argon', '39.948', 18, 3,
-				'K', 'Potassium', '39.948', 1, 4,
-				'Ca', 'Calcium', '40.078', 2, 4,
-				'Sc', 'Scandium', '44.955912', 3, 4,
-				'Ti', 'Titanium', '47.867', 4, 4,
-				'V', 'Vanadium', '50.9415', 5, 4,
-				'Cr', 'Chromium', '51.9961', 6, 4,
-				'Mn', 'Manganese', '54.938045', 7, 4,
-				'Fe', 'Iron', '55.845', 8, 4,
-				'Co', 'Cobalt', '58.933195', 9, 4,
-				'Ni', 'Nickel', '58.6934', 10, 4,
-				'Cu', 'Copper', '63.546', 11, 4,
-				'Zn', 'Zinc', '65.38', 12, 4,
-				'Ga', 'Gallium', '69.723', 13, 4,
-				'Ge', 'Germanium', '72.63', 14, 4,
-				'As', 'Arsenic', '74.9216', 15, 4,
-				'Se', 'Selenium', '78.96', 16, 4,
-				'Br', 'Bromine', '79.904', 17, 4,
-				'Kr', 'Krypton', '83.798', 18, 4,
-				'Rb', 'Rubidium', '85.4678', 1, 5,
-				'Sr', 'Strontium', '87.62', 2, 5,
-				'Y', 'Yttrium', '88.90585', 3, 5,
-				'Zr', 'Zirconium', '91.224', 4, 5,
-				'Nb', 'Niobium', '92.90628', 5, 5,
-				'Mo', 'Molybdenum', '95.96', 6, 5,
-				'Tc', 'Technetium', '(98)', 7, 5,
-				'Ru', 'Ruthenium', '101.07', 8, 5,
-				'Rh', 'Rhodium', '102.9055', 9, 5,
-				'Pd', 'Palladium', '106.42', 10, 5,
-				'Ag', 'Silver', '107.8682', 11, 5,
-				'Cd', 'Cadmium', '112.411', 12, 5,
-				'In', 'Indium', '114.818', 13, 5,
-				'Sn', 'Tin', '118.71', 14, 5,
-				'Sb', 'Antimony', '121.76', 15, 5,
-				'Te', 'Tellurium', '127.6', 16, 5,
-				'I', 'Iodine', '126.90447', 17, 5,
-				'Xe', 'Xenon', '131.293', 18, 5,
-				'Cs', 'Caesium', '132.9054', 1, 6,
-				'Ba', 'Barium', '132.9054', 2, 6,
-				'La', 'Lanthanum', '138.90547', 4, 9,
-				'Ce', 'Cerium', '140.116', 5, 9,
-				'Pr', 'Praseodymium', '140.90765', 6, 9,
-				'Nd', 'Neodymium', '144.242', 7, 9,
-				'Pm', 'Promethium', '(145)', 8, 9,
-				'Sm', 'Samarium', '150.36', 9, 9,
-				'Eu', 'Europium', '151.964', 10, 9,
-				'Gd', 'Gadolinium', '157.25', 11, 9,
-				'Tb', 'Terbium', '158.92535', 12, 9,
-				'Dy', 'Dysprosium', '162.5', 13, 9,
-				'Ho', 'Holmium', '164.93032', 14, 9,
-				'Er', 'Erbium', '167.259', 15, 9,
-				'Tm', 'Thulium', '168.93421', 16, 9,
-				'Yb', 'Ytterbium', '173.054', 17, 9,
-				'Lu', 'Lutetium', '174.9668', 18, 9,
-				'Hf', 'Hafnium', '178.49', 4, 6,
-				'Ta', 'Tantalum', '180.94788', 5, 6,
-				'W', 'Tungsten', '183.84', 6, 6,
-				'Re', 'Rhenium', '186.207', 7, 6,
-				'Os', 'Osmium', '190.23', 8, 6,
-				'Ir', 'Iridium', '192.217', 9, 6,
-				'Pt', 'Platinum', '195.084', 10, 6,
-				'Au', 'Gold', '196.966569', 11, 6,
-				'Hg', 'Mercury', '200.59', 12, 6,
-				'Tl', 'Thallium', '204.3833', 13, 6,
-				'Pb', 'Lead', '207.2', 14, 6,
-				'Bi', 'Bismuth', '208.9804', 15, 6,
-				'Po', 'Polonium', '(209)', 16, 6,
-				'At', 'Astatine', '(210)', 17, 6,
-				'Rn', 'Radon', '(222)', 18, 6,
-				'Fr', 'Francium', '(223)', 1, 7,
-				'Ra', 'Radium', '(226)', 2, 7,
-				'Ac', 'Actinium', '(227)', 4, 10,
-				'Th', 'Thorium', '232.03806', 5, 10,
-				'Pa', 'Protactinium', '231.0588', 6, 10,
-				'U', 'Uranium', '238.02891', 7, 10,
-				'Np', 'Neptunium', '(237)', 8, 10,
-				'Pu', 'Plutonium', '(244)', 9, 10,
-				'Am', 'Americium', '(243)', 10, 10,
-				'Cm', 'Curium', '(247)', 11, 10,
-				'Bk', 'Berkelium', '(247)', 12, 10,
-				'Cf', 'Californium', '(251)', 13, 10,
-				'Es', 'Einstenium', '(252)', 14, 10,
-				'Fm', 'Fermium', '(257)', 15, 10,
-				'Md', 'Mendelevium', '(258)', 16, 10,
-				'No', 'Nobelium', '(259)', 17, 10,
-				'Lr', 'Lawrencium', '(262)', 18, 10,
-				'Rf', 'Rutherfordium', '(267)', 4, 7,
-				'Db', 'Dubnium', '(268)', 5, 7,
-				'Sg', 'Seaborgium', '(271)', 6, 7,
-				'Bh', 'Bohrium', '(272)', 7, 7,
-				'Hs', 'Hassium', '(270)', 8, 7,
-				'Mt', 'Meitnerium', '(276)', 9, 7,
-				'Ds', 'Darmstadium', '(281)', 10, 7,
-				'Rg', 'Roentgenium', '(280)', 11, 7,
-				'Cn', 'Copernicium', '(285)', 12, 7,
-				'Nh', 'Nihonium', '(286)', 13, 7,
-				'Fl', 'Flerovium', '(289)', 14, 7,
-				'Mc', 'Moscovium', '(290)', 15, 7,
-				'Lv', 'Livermorium', '(293)', 16, 7,
-				'Ts', 'Tennessine', '(294)', 17, 7,
-				'Og', 'Oganesson', '(294)', 18, 7
+				'M', 'Ahmad', '25', 1, 1,
+				'M', 'Rui', '27', 18, 1,
+				'M', 'Hazree', '31', 1, 2,
+				'M', 'Zulfahmi', '31', 2, 2,
+				'M', 'Hai', '24', 13, 2,
+				'M', 'Bharath', '38', 14, 2,
+				'F', 'Shahma', '26', 15, 2,
+				'M', 'Keith', '27', 16, 2,
+				'M', 'JP', '36', 17, 2,
+				'M', 'Sr', '29', 18, 2,
+				'F', 'Sin', '32', 1, 3,
+				'M', 'Tom', '38', 2, 3,
+				'M', 'Matthew', '34', 13, 3,
+				'M', 'Aidan', '35', 14, 3,
+				'M', 'Yasser', '28', 15, 3,
+				'M', 'Chee', '28', 16, 3,
+				'M', 'Wilfred', '27', 17, 3,
+				'M', 'Shee', '25', 18, 3,
+				'M', 'Roman', '38', 1, 4,
+				'M', 'Ikmal', '38', 2, 4,
+				'M', 'Alex', '24', 3, 4,
+				'M', 'Kean', '26', 4, 4,
+				'M', 'Qi', '26', 5, 4,
+				'M', 'Clinton', '28', 6, 4,
+				'M', 'Maxim', '27', 7, 4,
+				'M', 'Shahiran', '36', 8, 4,
+				'M', 'Saeed', '26', 9, 4,
+				'M', 'Lance', '28', 10, 4,
+				'M', 'Mohammad', '30', 11, 4,
+				'M', 'Balaji', '27', 12, 4,
+				'M', 'Azman', '34', 13, 4,
+				'M', 'Kobe', '29', 14, 4,
+				'M', 'Harmit', '27', 15, 4,
+				'M', 'Keith', '34', 16, 4,
+				'M', 'Brian', '28', 17, 4,
+				'F', 'Hester', '27', 18, 4,
+				'M', 'Raymond', '34', 1, 5,
+				'F', 'Valerie', '32', 2, 5,
+				'M', 'Haziq', '25', 3, 5,
+				'M', 'Paul', '38', 4, 5,
+				'M', 'Simon', '36', 5, 5,
+				'M', 'Kenny', '39', 6, 5,
+				'M', 'Jeremy', '39', 7, 5,
+				'M', 'Mohamed', '37', 8, 5,
+				'M', 'Ben', '26', 9, 5,
+				'M', 'Nabil', '41', 10, 5,
+				'M', 'Suhail', '43', 11, 5,
+				'M', 'Jack', '31', 12, 5,
+				'F', 'Ling', '26', 13, 5,
+				'M', 'Wilson', '26', 14, 5,
+				'M', 'Ryuji', '27', 15, 5,
+				'M', 'Alexander', '31', 16, 5,
+				'M', 'Pravin', '28', 17, 5,
+				'M', 'Masayoshi', '27', 18, 5,
+				'M', 'Matthew', '27', 1, 6,
+				'M', 'Michael', '29', 2, 6,
+				'M', 'Eugene', '27', 4, 9,
+				'M', 'Joshua', '27', 5, 9,
+				'M', 'Desmonde', '29', 6, 9,
+				'M', 'Eric', '29', 7, 9,
+				'F', 'Fiona', '28', 8, 9,
+				'M', 'Viknesh', '26', 9, 9,
+				'M', 'Aliff', '24', 10, 9,
+				'M', 'Alexander', '27', 11, 9,
+				'F', 'Saisai', '28', 12, 9,
+				'F', 'Linda', '46', 13, 9,
+				'M', 'Mark', '34', 14, 9,
+				'F', 'Jasmin', '34', 15, 9,
+				'F', 'Xiaoyan', '28', 16, 9,
+				'F', 'Bobbie', '28', 17, 9,
+				'F', 'Hui', '25', 18, 9,
+				'M', 'Zia', '32', 4, 6,
+				'M', 'Jingyu', '27', 5, 6,
+				'F', 'Maura', '55', 6, 6,
+				'F', 'Jamie', '35', 7, 6,
+				'F', 'Kaitlyn', '32', 8, 6,
+				'F', 'Gina', '36', 9, 6,
+				'F', 'Angela', '28', 10, 6,
+				'M', 'Stephen', '27', 11, 6,
+				'M', 'Eric', '29', 12, 6,
+				'F', 'Grace', '35', 13, 6,
+				'M', 'John', '32', 14, 6,
+				'F', 'Mindi', '32', 15, 6,
+				'F', 'Makayla', '27', 16, 6,
+				'M', 'Fan', '27', 17, 6,
+				'F', 'Rachel', '32', 18, 6,
+				'F', 'Abigail', '29', 1, 7,
+				'M', 'Neil', '28', 2, 7,
+				'F', 'Jennifer', '34', 4, 10,
+				'F', 'Phoebe', '28', 5, 10,
+				'F', 'Nicole', '34', 6, 10,
+				'M', 'David', '27', 7, 10,
+				'F', 'Ning', '29', 8, 10,
+				'F', 'Jenny', '27', 9, 10,
+				'M', 'Nayan', '28', 10, 10,
+				'M', 'Jeffrey', '26', 11, 10,
+				'M', 'Anastasios', '26', 12, 10,
+				'M', 'Oscar', '32', 13, 10,
+				'M', 'Brian', '28', 14, 10,
+				'M', 'Robert', '27', 15, 10,
+				'F', 'Lyn', '26', 16, 10,
+				'F', 'Linda', '31', 17, 10,
+				'M', 'Isaac', '29', 18, 10,
+				'M', 'Ryan', '27', 4, 7,
+				'F', 'Irene', '27', 5, 7,
+				'M', 'Philip', '28', 6, 7,
+				'M', 'Hooper', '28', 7, 7,
+				'M', 'Ian', '30', 8, 7,
+				'F', 'Ginette', '31', 9, 7,
+				'F', 'Megan', '32', 10, 7,
+				'F', 'Karen', '31', 11, 7,
+				'F', 'Kelly', '30', 12, 7,
+				'M', 'Raghav', '31', 13, 7,
+				'M','Rosebrock', '31',  14, 7,
+				'F','Jennifer', '27',  15, 7,
+				'F','Maridah', '27',  16, 7,
+				'F', 'Yingfeng', '25', 17, 7,
+				'M', 'Phil', '31', 18, 7
 			];
+
+
+			// const table = [
+			// 	'Ahmad', '25', 'M', 1, 1,
+			// 	'Rui', '27', 'M', 18, 1,
+			// 	'Hazree', '31', 'M', 1, 2,
+			// 	'Zulfahmi', '31', 'M', 2, 2,
+			// 	'Hai', '24', 'M', 13, 2,
+			// 	'Bharath', '38', 'M', 14, 2,
+			// 	'Shahma', '26', 'F', 15, 2,
+			// 	'Keith', '27', 'M', 16, 2,
+			// 	'JP', '36', 'M', 17, 2,
+			// 	'Sr', '29', 'M', 18, 2,
+			// 	'Sin', '32', 'F', 1, 3,
+			// 	'Tom', '38', 'M', 2, 3,
+			// 	'Matthew', '34', 'M', 13, 3,
+			// 	'Aidan', '35', 'M', 14, 3,
+			// 	'Yasser', '28', 'M', 15, 3,
+			// 	'Chee', '28', 'M', 16, 3,
+			// 	'Wilfred', '27', 'M', 17, 3,
+			// 	'Shee', '25', 'M', 18, 3,
+			// 	'Roman', '38', 'M', 1, 4,
+			// 	'Ikmal', '38', 'M', 2, 4,
+			// 	'Alex', '24', 'M', 3, 4,
+			// 	'Kean', '26', 'M', 4, 4,
+			// 	'Qi', '26', 'M', 5, 4,
+			// 	'Clinton', '28', 'M', 6, 4,
+			// 	'Maxim', '27', 'M', 7, 4,
+			// 	'Shahiran', '36', 'M', 8, 4,
+			// 	'Saeed', '26', 'M', 9, 4,
+			// 	'Lance', '28', 'M', 10, 4,
+			// 	'Mohammad', '30', 'M', 11, 4,
+			// 	'Balaji', '27', 'M', 12, 4,
+			// 	'Azman', '34', 'M', 13, 4,
+			// 	'Kobe', '29', 'M', 14, 4,
+			// 	'Harmit', '27', 'M', 15, 4,
+			// 	'Keith', '34', 'M', 16, 4,
+			// 	'Brian', '28', 'M', 17, 4,
+			// 	'Hester', '27', 'F', 18, 4,
+			// 	'Raymond', '34', 'M', 1, 5,
+			// 	'Valerie', '32', 'F', 2, 5,
+			// 	'Haziq', '25', 'M', 3, 5,
+			// 	'Paul', '38', 'M', 4, 5,
+			// 	'Simon', '36', 'M', 5, 5,
+			// 	'Kenny', '39', 'M', 6, 5,
+			// 	'Jeremy', '39', 'M', 7, 5,
+			// 	'Mohamed', '37', 'M', 8, 5,
+			// 	'Ben', '26', 'M', 9, 5,
+			// 	'Nabil', '41', 'M', 10, 5,
+			// 	'Suhail', '43', 'M', 11, 5,
+			// 	'Jack', '31', 'M', 12, 5,
+			// 	'Ling', '26', 'F', 13, 5,
+			// 	'Wilson', '26', 'M', 14, 5,
+			// 	'Ryuji', '27', 'M', 15, 5,
+			// 	'Alexander', '31', 'M', 16, 5,
+			// 	'Pravin', '28', 'M', 17, 5,
+			// 	'Masayoshi', '27', 'M', 18, 5,
+			// 	'Matthew', '27', 'M', 1, 6,
+			// 	'Michael', '29', 'M', 2, 6,
+			// 	'Eugene', '27', 'M', 4, 9,
+			// 	'Joshua', '27', 'M', 5, 9,
+			// 	'Desmonde', '29', 'M', 6, 9,
+			// 	'Eric', '29', 'M', 7, 9,
+			// 	'Fiona', '28', 'F', 8, 9,
+			// 	'Viknesh', '26', 'M', 9, 9,
+			// 	'Aliff', '24', 'M', 10, 9,
+			// 	'Alexander', '27', 'M', 11, 9,
+			// 	'Saisai', '28', 'F', 12, 9,
+			// 	'Linda', '46', 'F', 13, 9,
+			// 	'Mark', '34', 'M', 14, 9,
+			// 	'Jasmin', '34', 'F', 15, 9,
+			// 	'Xiaoyan', '28', 'F', 16, 9,
+			// 	'Bobbie', '28', 'F', 17, 9,
+			// 	'Hui', '25', 'F', 18, 9,
+			// 	'Zia', '32', 'M', 4, 6,
+			// 	'Jingyu', '27', 'M', 5, 6,
+			// 	'Maura', '55', 'F', 6, 6,
+			// 	'Jamie', '35', 'F', 7, 6,
+			// 	'Kaitlyn', '32', 'F', 8, 6,
+			// 	'Gina', '36', 'F', 9, 6,
+			// 	'Angela', '28', 'F', 10, 6,
+			// 	'Stephen', '27', 'M', 11, 6,
+			// 	'Eric', '29', 'M', 12, 6,
+			// 	'Grace', '35', 'F', 13, 6,
+			// 	'John', '32', 'M', 14, 6,
+			// 	'Mindi', '32', 'F', 15, 6,
+			// 	'Makayla', '27', 'F', 16, 6,
+			// 	'Fan', '27', 'M', 17, 6,
+			// 	'Rachel', '32', 'F', 18, 6,
+			// 	'Abigail', '29', 'F', 1, 7,
+			// 	'Neil', '28', 'M', 2, 7,
+			// 	'Jennifer', '34', 'F', 4, 10,
+			// 	'Phoebe', '28', 'F', 5, 10,
+			// 	'Nicole', '34', 'F', 6, 10,
+			// 	'David', '27', 'M', 7, 10,
+			// 	'Ning', '29', 'F', 8, 10,
+			// 	'Jenny', '27', 'F', 9, 10,
+			// 	'Nayan', '28', 'M', 10, 10,
+			// 	'Jeffrey', '26', 'M', 11, 10,
+			// 	'Anastasios', '26', 'M', 12, 10,
+			// 	'Oscar', '32', 'M', 13, 10,
+			// 	'Brian', '28', 'M', 14, 10,
+			// 	'Robert', '27', 'M', 15, 10,
+			// 	'Lyn', '26', 'F', 16, 10,
+			// 	'Linda', '31', 'F', 17, 10,
+			// 	'Isaac', '29', 'M', 18, 10,
+			// 	'Ryan', '27', 'M', 4, 7,
+			// 	'Irene', '27', 'F', 5, 7,
+			// 	'Philip', '28', 'M', 6, 7,
+			// 	'Hooper', '28', 'M', 7, 7,
+			// 	'Ian', '30', 'M', 8, 7,
+			// 	'Ginette', '31', 'F', 9, 7,
+			// 	'Megan', '32', 'F', 10, 7,
+			// 	'Karen', '31', 'F', 11, 7,
+			// 	'Kelly', '30', 'F', 12, 7,
+			// 	'Raghav', '31', 'M', 13, 7,
+			// 	'Rosebrock', '31', 'M', 14, 7,
+			// 	'Jennifer', '27', 'F', 15, 7,
+			// 	'Maridah', '27', 'F', 16, 7,
+			// 	'Yingfeng', '25', 'F', 17, 7,
+			// 	'Phil', '31', 'M', 18, 7
+			// ];
+
+			// const table = [
+			// 	'H', 'Hydrogen', '1.00794', 1, 1,
+			// 	'He', 'Helium', '4.002602', 18, 1,
+			// 	'Li', 'Lithium', '6.941', 1, 2,
+			// 	'Be', 'Beryllium', '9.012182', 2, 2,
+			// 	'B', 'Boron', '10.811', 13, 2,
+			// 	'C', 'Carbon', '12.0107', 14, 2,
+			// 	'N', 'Nitrogen', '14.0067', 15, 2,
+			// 	'O', 'Oxygen', '15.9994', 16, 2,
+			// 	'F', 'Fluorine', '18.9984032', 17, 2,
+			// 	'Ne', 'Neon', '20.1797', 18, 2,
+			// 	'Na', 'Sodium', '22.98976...', 1, 3,
+			// 	'Mg', 'Magnesium', '24.305', 2, 3,
+			// 	'Al', 'Aluminium', '26.9815386', 13, 3,
+			// 	'Si', 'Silicon', '28.0855', 14, 3,
+			// 	'P', 'Phosphorus', '30.973762', 15, 3,
+			// 	'S', 'Sulfur', '32.065', 16, 3,
+			// 	'Cl', 'Chlorine', '35.453', 17, 3,
+			// 	'Ar', 'Argon', '39.948', 18, 3,
+			// 	'K', 'Potassium', '39.948', 1, 4,
+			// 	'Ca', 'Calcium', '40.078', 2, 4,
+			// 	'Sc', 'Scandium', '44.955912', 3, 4,
+			// 	'Ti', 'Titanium', '47.867', 4, 4,
+			// 	'V', 'Vanadium', '50.9415', 5, 4,
+			// 	'Cr', 'Chromium', '51.9961', 6, 4,
+			// 	'Mn', 'Manganese', '54.938045', 7, 4,
+			// 	'Fe', 'Iron', '55.845', 8, 4,
+			// 	'Co', 'Cobalt', '58.933195', 9, 4,
+			// 	'Ni', 'Nickel', '58.6934', 10, 4,
+			// 	'Cu', 'Copper', '63.546', 11, 4,
+			// 	'Zn', 'Zinc', '65.38', 12, 4,
+			// 	'Ga', 'Gallium', '69.723', 13, 4,
+			// 	'Ge', 'Germanium', '72.63', 14, 4,
+			// 	'As', 'Arsenic', '74.9216', 15, 4,
+			// 	'Se', 'Selenium', '78.96', 16, 4,
+			// 	'Br', 'Bromine', '79.904', 17, 4,
+			// 	'Kr', 'Krypton', '83.798', 18, 4,
+			// 	'Rb', 'Rubidium', '85.4678', 1, 5,
+			// 	'Sr', 'Strontium', '87.62', 2, 5,
+			// 	'Y', 'Yttrium', '88.90585', 3, 5,
+			// 	'Zr', 'Zirconium', '91.224', 4, 5,
+			// 	'Nb', 'Niobium', '92.90628', 5, 5,
+			// 	'Mo', 'Molybdenum', '95.96', 6, 5,
+			// 	'Tc', 'Technetium', '(98)', 7, 5,
+			// 	'Ru', 'Ruthenium', '101.07', 8, 5,
+			// 	'Rh', 'Rhodium', '102.9055', 9, 5,
+			// 	'Pd', 'Palladium', '106.42', 10, 5,
+			// 	'Ag', 'Silver', '107.8682', 11, 5,
+			// 	'Cd', 'Cadmium', '112.411', 12, 5,
+			// 	'In', 'Indium', '114.818', 13, 5,
+			// 	'Sn', 'Tin', '118.71', 14, 5,
+			// 	'Sb', 'Antimony', '121.76', 15, 5,
+			// 	'Te', 'Tellurium', '127.6', 16, 5,
+			// 	'I', 'Iodine', '126.90447', 17, 5,
+			// 	'Xe', 'Xenon', '131.293', 18, 5,
+			// 	'Cs', 'Caesium', '132.9054', 1, 6,
+			// 	'Ba', 'Barium', '132.9054', 2, 6,
+			// 	'La', 'Lanthanum', '138.90547', 4, 9,
+			// 	'Ce', 'Cerium', '140.116', 5, 9,
+			// 	'Pr', 'Praseodymium', '140.90765', 6, 9,
+			// 	'Nd', 'Neodymium', '144.242', 7, 9,
+			// 	'Pm', 'Promethium', '(145)', 8, 9,
+			// 	'Sm', 'Samarium', '150.36', 9, 9,
+			// 	'Eu', 'Europium', '151.964', 10, 9,
+			// 	'Gd', 'Gadolinium', '157.25', 11, 9,
+			// 	'Tb', 'Terbium', '158.92535', 12, 9,
+			// 	'Dy', 'Dysprosium', '162.5', 13, 9,
+			// 	'Ho', 'Holmium', '164.93032', 14, 9,
+			// 	'Er', 'Erbium', '167.259', 15, 9,
+			// 	'Tm', 'Thulium', '168.93421', 16, 9,
+			// 	'Yb', 'Ytterbium', '173.054', 17, 9,
+			// 	'Lu', 'Lutetium', '174.9668', 18, 9,
+			// 	'Hf', 'Hafnium', '178.49', 4, 6,
+			// 	'Ta', 'Tantalum', '180.94788', 5, 6,
+			// 	'W', 'Tungsten', '183.84', 6, 6,
+			// 	'Re', 'Rhenium', '186.207', 7, 6,
+			// 	'Os', 'Osmium', '190.23', 8, 6,
+			// 	'Ir', 'Iridium', '192.217', 9, 6,
+			// 	'Pt', 'Platinum', '195.084', 10, 6,
+			// 	'Au', 'Gold', '196.966569', 11, 6,
+			// 	'Hg', 'Mercury', '200.59', 12, 6,
+			// 	'Tl', 'Thallium', '204.3833', 13, 6,
+			// 	'Pb', 'Lead', '207.2', 14, 6,
+			// 	'Bi', 'Bismuth', '208.9804', 15, 6,
+			// 	'Po', 'Polonium', '(209)', 16, 6,
+			// 	'At', 'Astatine', '(210)', 17, 6,
+			// 	'Rn', 'Radon', '(222)', 18, 6,
+			// 	'Fr', 'Francium', '(223)', 1, 7,
+			// 	'Ra', 'Radium', '(226)', 2, 7,
+			// 	'Ac', 'Actinium', '(227)', 4, 10,
+			// 	'Th', 'Thorium', '232.03806', 5, 10,
+			// 	'Pa', 'Protactinium', '231.0588', 6, 10,
+			// 	'U', 'Uranium', '238.02891', 7, 10,
+			// 	'Np', 'Neptunium', '(237)', 8, 10,
+			// 	'Pu', 'Plutonium', '(244)', 9, 10,
+			// 	'Am', 'Americium', '(243)', 10, 10,
+			// 	'Cm', 'Curium', '(247)', 11, 10,
+			// 	'Bk', 'Berkelium', '(247)', 12, 10,
+			// 	'Cf', 'Californium', '(251)', 13, 10,
+			// 	'Es', 'Einstenium', '(252)', 14, 10,
+			// 	'Fm', 'Fermium', '(257)', 15, 10,
+			// 	'Md', 'Mendelevium', '(258)', 16, 10,
+			// 	'No', 'Nobelium', '(259)', 17, 10,
+			// 	'Lr', 'Lawrencium', '(262)', 18, 10,
+			// 	'Rf', 'Rutherfordium', '(267)', 4, 7,
+			// 	'Db', 'Dubnium', '(268)', 5, 7,
+			// 	'Sg', 'Seaborgium', '(271)', 6, 7,
+			// 	'Bh', 'Bohrium', '(272)', 7, 7,
+			// 	'Hs', 'Hassium', '(270)', 8, 7,
+			// 	'Mt', 'Meitnerium', '(276)', 9, 7,
+			// 	'Ds', 'Darmstadium', '(281)', 10, 7,
+			// 	'Rg', 'Roentgenium', '(280)', 11, 7,
+			// 	'Cn', 'Copernicium', '(285)', 12, 7,
+			// 	'Nh', 'Nihonium', '(286)', 13, 7,
+			// 	'Fl', 'Flerovium', '(289)', 14, 7,
+			// 	'Mc', 'Moscovium', '(290)', 15, 7,
+			// 	'Lv', 'Livermorium', '(293)', 16, 7,
+			// 	'Ts', 'Tennessine', '(294)', 17, 7,
+			// 	'Og', 'Oganesson', '(294)', 18, 7
+			// ];
 
 			let camera, scene, renderer;
 			let controls;
 
 			const objects = [];
-			const targets = { table: [], sphere: [], helix: [], grid: [] };
+			const targets = { table: [], sphere: [], helix: [], grid: [], cone: [] };
 
 			init();
 			animate();
@@ -255,7 +504,13 @@
 
 					const element = document.createElement( 'div' );
 					element.className = 'element';
-					element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+					if(table[i] === 'F'){
+					element.style.backgroundColor = 'rgba(255,20,147,' + ( Math.random() * 0.5 + 0.25 ) + ')';}
+					else{
+						element.style.backgroundColor = 'rgba(0,0,255,' + ( Math.random() * 0.5 + 0.25 ) + ')'
+					}
+					
+					// element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')'
 
 					const number = document.createElement( 'div' );
 					number.className = 'number';
@@ -311,6 +566,25 @@
 
 				}
 
+// 				const vector = new THREE.Vector3();
+
+// for ( let i = 0, l = objects.length; i < l; i ++ ) {
+
+// 	const phi = Math.acos( - 1 + ( 2 * i ) / l );
+// 	const theta = Math.sqrt( l * Math.PI ) * phi;
+
+// 	const object = new THREE.Object3D();
+
+// 	object.position.setFromSphericalCoords( 800, phi, theta );
+
+// 	vector.copy( object.position ).multiplyScalar( 2 );
+
+// 	object.lookAt( vector );
+
+// 	targets.sphere.push( object );
+
+// }
+
 				// helix
 
 				for ( let i = 0, l = objects.length; i < l; i ++ ) {
@@ -343,6 +617,31 @@
 					object.position.z = ( Math.floor( i / 25 ) ) * 1000 - 2000;
 
 					targets.grid.push( object );
+
+				}
+
+				// cone
+				
+
+				for ( let i = 0; i < objects.length; i ++ ) {
+					const coneVector = new THREE.Vector3()
+
+					
+					const theta = i * 4 + Math.PI;
+					// const y = -(i * 12) + 450;
+					const y = -(i * 12) + 450;
+					const object = new THREE.Object3D;
+
+					object.position.setFromCylindricalCoords(theta, y);
+					// coneVector.x = object.position.x * 2;
+					// coneVector.y = object.position.y;
+					// coneVector.z = object.position.z * 2;
+					vector.x = object.position.x * 2;
+					vector.y = object.position.y;
+					vector.z = object.position.z * 2;
+
+					// object.lookAt(vector);
+					targets.cone.push(object);
 
 				}
 
@@ -389,7 +688,15 @@
 
 				transform( targets.table, 2000 );
 
-				//
+				const buttonCone = document.getElementById( 'cone' );
+				buttonCone.addEventListener( 'click', function () {
+
+					transform( targets.cone, 2000 );
+
+				} );
+
+
+				
 
 				window.addEventListener( 'resize', onWindowResize );
 
